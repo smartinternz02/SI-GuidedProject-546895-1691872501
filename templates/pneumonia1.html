@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Virtual Doctor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #ffffff, #8efff6);
+        }
+
+            /* Navigation bar styling */
+            .navbar {
+            background-color: #343a40;
+            position: relative;
+        }
+
+        /* Center the Virtual Doctor text */
+        .navbar-text {
+            color: #fff;
+            font-size: 30px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .navbar a {
+            color: #fff;
+            text-align: center;
+            padding: 8px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            background-color: #aaa;
+            color: #fff;
+        }
+        h2{
+            text-align: center;
+        }
+
+        main {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .section {
+            width: 100%;
+            margin-bottom: 20px;
+            background: linear-gradient(to bottom, #92fdff, #fbe0e0);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-section {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .right-section {
+            flex: 1;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        h1{
+            font-size: 18px;
+            margin-top: 9px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Update the cols to increase horizontal length of the textarea */
+        #symptoms {
+            resize: none;
+            columns: 60;
+        }
+
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-color: #8efff6;
+        }
+
+        /* Update the button styles with a new color scheme */
+        button {
+            padding: 10px 20px;
+            background-color: #3399cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Add a slight shadow and animation on hover for the buttons */
+        button:hover {
+            background-color: #0077b3;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Style the "Choose File" input */
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #3399cc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease;
+            /* Hide the default file input button */
+            position: relative;
+            overflow: hidden;
+            appearance: none;
+        }
+
+        /* Add a colorful effect on hover for the "Choose File" input */
+        input[type="file"]:hover {
+            border-color: #00cc99;
+        }
+
+        /* Add a colorful effect on focus for the "Choose File" input */
+        input[type="file"]:focus {
+            outline: none;
+            border-color: #00cc99;
+            box-shadow: 0 0 4px #00cc99;
+        }
+
+        /* Style the custom file input button */
+        .custom-file-input-btn {
+            background-color: #3399cc;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Add a slight shadow and animation on hover for the custom file input button */
+        .custom-file-input-btn:hover {
+            background-color: #0077b3;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: pulse 1s infinite;
+        }
+
+        /* Hide the original file input button */
+        input[type="file"]::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        /* Show the custom file input button */
+        input[type="file"]::before {
+            content: 'Choose File';
+            display: inline-block;
+            background-color: #3399cc;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Add a slight shadow and animation on hover for the custom file input button */
+        input[type="file"]::before:hover {
+            background-color: #0077b3;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: pulse 1s infinite;
+        }
+
+        /* Hide the original file input button */
+        input[type="file"]::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        /* Show the custom file input button */
+        input[type="file"]::before {
+            content: 'Choose File';
+            display: inline-block;
+            background-color: #33cc4f;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Add a slight shadow and animation on hover for the custom file input button */
+        input[type="file"]::before:hover {
+            background-color: #0077b3;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: pulse 1s infinite;
+        }
+
+        .result-item {
+            margin-bottom: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            
+        }
+
+        .result-item h3 {
+            margin-bottom: 5px;
+        }
+
+        #diagnosisResults,
+        #pneumoniaResult {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 8px;
+            text-align: center;
+            width: 100%;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md">
+        <div class="navbar-brand">
+            <img src="https://w7.pngwing.com/pngs/564/607/png-transparent-staff-of-hermes-caduceus-as-a-symbol-of-medicine-rod-of-asclepius-doctor-miscellaneous-text-people-thumbnail.png"
+                alt="Logo" width="30" height="30">
+        </div>
+        <div class="navbar-text">
+            Virtual Doctor
+        </div>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-home"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-chart-bar"></i> Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-user"></i> Profile</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="section right-section">
+            <section id="pneumoniaPrediction">
+                <h2>Disease Prediction Based on</h2>
+                <h2> X-ray Image</h2>
+                <div>
+                    <label for="xRayImage">Upload X-ray image for prediction:</label>
+                    <input type="file" id="xRayImage">
+                </div>
+                <button id="predictBtn">Predict</button>
+                <div id="pneumoniaResult"></div>
+            </section>
+        </div>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2023 My Web Page. All rights reserved.</p>
+    </footer>
+    <script>
+            const predictBtn = document.getElementById("predictBtn");
+            const xRayImageInput = document.getElementById("xRayImage");
+            const pneumoniaResultDiv = document.getElementById("pneumoniaResult");
+    
+            predictBtn.addEventListener("click", function () {
+    const xRayImage = xRayImageInput.files[0];
+    const formData = new FormData();
+    formData.append("file", xRayImage);
+    fetch("/predict_pneumonia", {
+        method: "POST",
+        body: formData,
+    })
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        const pneumoniaPrediction = data.prediction;
+        pneumoniaResultDiv.innerHTML = "";
+        const pneumoniaResultItem = document.createElement("div");
+        pneumoniaResultItem.classList.add("result-item");
+        pneumoniaResultItem.innerHTML = `
+            <h2>Prediction Result:</h2>
+            <p>${pneumoniaPrediction}</p>
+        `;
+        pneumoniaResultDiv.appendChild(pneumoniaResultItem);
+
+        if (pneumoniaPrediction === 'Pneumonia') {  // Corrected comparison
+            const appointmentButton = document.createElement("button");
+                appointmentButton.textContent = "Get Appointment";
+                appointmentButton.className = "book-button";
+
+                // Modify the click event to redirect to the appointment page
+                appointmentButton.onclick = function () {
+                    window.location.href = "/make_appointment";
+                };
+    const appointmentItem = document.createElement("div");
+    appointmentItem.classList.add("result-item");
+    appointmentItem.innerHTML = `
+        <h3>Book Appointment:</h3>
+        <p></p>
+    `;
+    appointmentItem.querySelector("h3").appendChild(appointmentButton);
+
+    pneumoniaResultDiv.appendChild(appointmentItem);
+}
+    })
+    .catch(function (error) {
+        console.error("Error:", error);
+    });
+});
+</script>
+</body>
+</html>
